@@ -19,7 +19,10 @@ type DefaultedProps = Omit<FunctionProps, DefaultedPropKeys> & Partial<Pick<Func
 export type BackendLambdaProps = DefaultedProps & {
     name: string
     tables?: {
-        orders?: AccessType
+        postMetas?: AccessType
+    }
+    buckets?: {
+        assets: AccessType
     }
     util?: {
         mailing?: boolean
@@ -32,21 +35,22 @@ export type BackendLambdaProps = DefaultedProps & {
 }
 
 export class BackendLambda extends Function {
-    constructor(scope: Construct, id: string, { tables, util, name, api, ...lambdaProps }: BackendLambdaProps) {
+    constructor(scope: Construct, id: string, { tables, buckets, util, name, api, ...lambdaProps }: BackendLambdaProps) {
         super(scope, id, {
             runtime: Runtime.NODEJS_16_X,
-            functionName: name.replace("Handler", "Lambda"),
+            functionName: "hennigram-" + name,
             code: Code.fromAsset(backendDistPath),
             handler: "handler." + name,
             ...lambdaProps,
         })
 
         this.addTables(tables)
+        this.addBuckets(buckets)
         this.addUtil(util)
 
         if (api) {
             apiStack.apiGateway.root.resourceForPath(api.path).addMethod(api.method, new LambdaIntegration(this), {
-                authorizer: api.authorizer ? apiStack.sessionAuthorizer : undefined,
+                // authorizer: api.authorizer ? apiStack.sessionAuthorizer : undefined,
             })
         }
     }
@@ -56,10 +60,10 @@ export class BackendLambda extends Function {
             return
         }
 
-        if (tables.orders) {
+        if (tables.postMetas) {
             this.addEnvironment("POSTS_TABLE", globals.orderTable.tableName)
             this.addEnvironment("POSTS_TABLE_DATED_INDEX", "dating")
-            switch (tables.orders) {
+            switch (tables.postMetas) {
                 case AccessType.Read:
                     globals.orderTable.grantReadData(this)
                     break
@@ -68,6 +72,27 @@ export class BackendLambda extends Function {
                     break
                 case AccessType.ReadWrite:
                     globals.orderTable.grantReadWriteData(this)
+                    break
+            }
+        }
+    }
+
+    addBuckets(buckets?: BackendLambdaProps["buckets"]) {
+        if (!buckets) {
+            return
+        }
+
+        if (buckets.assets) {
+            this.addEnvironment("ASSETS_BUCKET", globals.assetsBucket.bucketName)
+            switch (buckets.assets) {
+                case AccessType.Read:
+                    globals.assetsBucket.grantRead(this)
+                    break
+                case AccessType.Write:
+                    globals.assetsBucket.grantWrite(this)
+                    break
+                case AccessType.ReadWrite:
+                    globals.assetsBucket.grantReadWrite(this)
                     break
             }
         }

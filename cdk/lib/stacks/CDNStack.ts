@@ -28,7 +28,7 @@ export class ApiGatewayOrigin extends HttpOrigin {
 
 export class CDNStack extends Stack {
     constructor(app: App) {
-        super(app, "CDN")
+        super(app, "HennigramCDN")
 
         const hostedZone = globals.hostedZone
         const apiGateway = apiStack.apiGateway
@@ -78,7 +78,7 @@ export class CDNStack extends Stack {
                 cachePolicyName: "api",
                 queryStringBehavior: CacheQueryStringBehavior.all(),
                 cookieBehavior: CacheCookieBehavior.all(),
-                headerBehavior: CacheHeaderBehavior.allowList("Cookie", "Cookies", "Origin", "CloudFront-Forwarded-Proto", "Referer"),
+                headerBehavior: CacheHeaderBehavior.allowList("Origin", "CloudFront-Forwarded-Proto", "Referer"),
                 minTtl: Duration.seconds(0),
                 defaultTtl: Duration.seconds(0),
                 maxTtl: Duration.seconds(10),

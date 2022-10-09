@@ -1,0 +1,21 @@
+{
+  "name": "@hennigram/backend",
+  "packageManager": "yarn@3.2.4",
+  "scripts": {
+    "build": "tsx esbuild.ts",
+    "deploy": "cd ../cdk && pnpm deploy"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.106",
+    "@types/node": "10.17.27",
+    "@types/uuid": "^8.3.4",
+    "aws-sdk": "^2.1231.0",
+    "esbuild": "^0.15.10",
+    "tsx": "^3.10.1",
+    "typescript": "^4.6.4",
+    "@hennigram/types": "^1.0.0"
+  },
+  "dependencies": {
+    "uuid": "^9.0.0"
+  }
+}

@@ -1,6 +1,5 @@
 import { App, Stack } from "aws-cdk-lib"
-import { Authorizer, EndpointType, IdentitySource, MethodLoggingLevel, RequestAuthorizer, RestApi } from "aws-cdk-lib/aws-apigateway"
-import { BackendLambda } from "../base/BackendLambda"
+import { Authorizer, EndpointType, MethodLoggingLevel, RestApi } from "aws-cdk-lib/aws-apigateway"
 
 export class ApiStack extends Stack {
     static StageName = "api"
@@ -9,10 +8,10 @@ export class ApiStack extends Stack {
     sessionAuthorizer: Authorizer
 
     constructor(app: App) {
-        super(app, "ApiGateway")
+        super(app, "ApiGateway", { stackName: "HennigramApi" })
 
         this.apiGateway = new RestApi(this, "ApiGateway", {
-            restApiName: "HennigramAPI",
+            restApiName: "HennigramApi",
             endpointConfiguration: {
                 types: [EndpointType.REGIONAL],
             },
@@ -23,11 +22,11 @@ export class ApiStack extends Stack {
             },
         })
 
-        this.sessionAuthorizer = new RequestAuthorizer(this, "SessionAuthorizer", {
+        /*this.sessionAuthorizer = new RequestAuthorizer(this, "SessionAuthorizer", {
             handler: new BackendLambda(this, "/Lambda", {
                 name: "sessionAuthorizerHandler",
             }),
             identitySources: [IdentitySource.header("Cookie")],
-        })
+        })*/
     }
 }
