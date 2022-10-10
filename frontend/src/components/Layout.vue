@@ -1,9 +1,11 @@
 <template>
-    <div class="bg-gray-800 h-screen text-white pt-8 grid grid-rows-[1fr_auto]">
-        <main>
-            <slot />
-        </main>
-        <Footer />
+    <div class="bg-gray-800 h-screen text-white pt-8">
+        <section class="max-w-screen-lg mx-auto h-full grid grid-rows-[1fr_auto]">
+            <main class="px-8 overflow-y-scroll">
+                <slot />
+            </main>
+            <Footer />
+        </section>
     </div>
 </template>
 

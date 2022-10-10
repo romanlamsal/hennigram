@@ -4,7 +4,7 @@
             v-for="{ label, icon, target, isActive } in navElements"
             :key="label"
             @click="router.push(target)"
-            class="flex flex-col items-center justify-center p-4 cursor-pointer rounded-t-lg"
+            class="flex flex-col items-center justify-center p-4 cursor-pointer rounded-t-lg space-y-2"
             :class="isActive && 'bg-gray-700'"
         >
             <component :is="icon" />
@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router"
-import { Rss, Upload, Box } from "mdue"
+import { Rss, Upload, FolderMultipleImage } from "mdue"
 import { computed } from "vue"
 
 const router = useRouter()
@@ -30,7 +30,7 @@ const navElements = computed(() => [
     },
     {
         label: "Gallery",
-        icon: Box,
+        icon: FolderMultipleImage,
         target: "/gallery",
         isActive: route.path.startsWith("/gallery"),
     },

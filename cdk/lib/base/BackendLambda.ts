@@ -3,6 +3,7 @@ import { Construct } from "constructs"
 import { apiStack, globals } from "../../bin/cdk"
 import * as path from "path"
 import { LambdaIntegration } from "aws-cdk-lib/aws-apigateway"
+import { Duration } from "aws-cdk-lib"
 
 const backendDistPath = path.join(__dirname, "../../../backend/dist")
 
@@ -12,7 +13,7 @@ export enum AccessType {
     ReadWrite = "RW",
 }
 
-type DefaultedPropKeys = Extract<keyof FunctionProps, "runtime" | "functionName" | "code" | "handler">
+type DefaultedPropKeys = Extract<keyof FunctionProps, "runtime" | "functionName" | "code" | "handler" | "timeout">
 
 type DefaultedProps = Omit<FunctionProps, DefaultedPropKeys> & Partial<Pick<FunctionProps, DefaultedPropKeys>>
 
@@ -41,6 +42,7 @@ export class BackendLambda extends Function {
             functionName: "hennigram-" + name,
             code: Code.fromAsset(backendDistPath),
             handler: "handler." + name,
+            timeout: Duration.seconds(30),
             ...lambdaProps,
         })
 

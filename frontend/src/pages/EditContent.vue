@@ -2,14 +2,22 @@
     <div v-if="data">
         <main class="p-8">
             <div class="border rounded-lg border-white mx-auto md:max-w-screen-md h-96" @click="!id ? $refs.input.click() : null">
-                <div v-if="!id" class="w-full max-w-full h-full max-h-full cursor-pointer flex items-center justify-center">
-                    <input type="file" id="upload" :multiple="false" class="hidden" ref="input" @change="file = $event.target.files[0]" />
+                <div v-if="!id" class="cursor-pointer" :class="imgContainerClasses">
+                    <input
+                        type="file"
+                        id="upload"
+                        :multiple="false"
+                        class="hidden"
+                        ref="input"
+                        @change="file = $event.target.files[0]"
+                        accept="image/*,video/*"
+                    />
                     <label for="upload" class="cursor-inherit" v-if="!file">
                         <span>Click here to upload</span>
                     </label>
                     <img v-else :src="fileUrl" alt="upload" :class="imgClasses" />
                 </div>
-                <div v-else>
+                <div v-else :class="imgContainerClasses">
                     <img
                         v-if="data.contentType.startsWith('image/')"
                         :src="`/assets/${data.id}/${data.filename}`"
@@ -25,7 +33,13 @@
                 <input id="dating" type="date" class="text-black" v-model="data.dating" />
             </div>
             <div class="text-right mt-16">
-                <button class="border rounded-md p-2 w-full bg-white text-gray-800 font-semibold" @click="uploadAndCreate">save</button>
+                <button
+                    class="border rounded-md p-2 w-full bg-white text-gray-800 font-semibold"
+                    @click="uploadAndCreate"
+                    :disabled="loading"
+                >
+                    save
+                </button>
             </div>
         </main>
     </div>
@@ -76,18 +90,26 @@ watch(
     }
 )
 
-const imgClasses = "object-fit max-w-full max-h-full"
+const imgContainerClasses = "w-full max-w-full h-full max-h-full flex items-center justify-center"
+const imgClasses = "object-fit max-w-full max-h-full h-full"
+
+const loading = ref<boolean>(false)
 
 async function uploadAndCreate() {
     if (!file.value) {
         return
     }
 
+    loading.value = true
     await createPost(file.value, {
         description: data.value!.description,
         dating: data.value?.dating || new Date().toISOString(),
-    }).then(({ id }) => router.push("/edit-content/" + id))
+    })
+        .then(({ id }) => router.push("/edit-content/" + id))
+        .finally(() => (loading.value = false))
 }
+
+async function update() {}
 </script>
 
 <style scoped lang="scss"></style>

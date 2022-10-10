@@ -1,6 +1,7 @@
 import { APIGatewayProxyHandler } from "aws-lambda"
-import { DynamoDB } from "aws-sdk"
+import { S3 } from "aws-sdk"
 import { PostMeta } from "@hennigram/types/PostMeta"
+import { toBucketKey } from "./toBucketKey"
 
 export const getPostMeta: APIGatewayProxyHandler = async event => {
     const { id } = (event.pathParameters || {}) as { id: string }
@@ -12,7 +13,15 @@ export const getPostMeta: APIGatewayProxyHandler = async event => {
         }
     }
 
-    const item: PostMeta = await new DynamoDB.DocumentClient()
+    const item: PostMeta = await new S3()
+        .getObject({
+            Bucket: process.env.ASSETS_BUCKET!,
+            Key: toBucketKey({ id }),
+        })
+        .promise()
+        .then(res => (res.Body ? JSON.parse(res.Body?.toString()) : undefined))
+
+    /*const item: PostMeta = await new DynamoDB.DocumentClient()
         .get({
             TableName: process.env.POSTS_TABLE!,
             Key: {
@@ -20,7 +29,7 @@ export const getPostMeta: APIGatewayProxyHandler = async event => {
             },
         })
         .promise()
-        .then(res => res.Item as PostMeta)
+        .then(res => res.Item as PostMeta)*/
 
     if (!item) {
         return {
