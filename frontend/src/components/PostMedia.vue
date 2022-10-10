@@ -11,7 +11,7 @@ import { computed } from "vue"
 
 const props = defineProps<{ id: string; filename: string; contentType: string }>()
 
-const imgContainerClasses = "w-full max-w-full h-full max-h-full flex items-center justify-center p-2"
+const imgContainerClasses = "w-full max-w-full flex items-center justify-center p-2"
 const imgClasses = "object-contain max-w-full max-h-full h-full"
 
 const fileSrc = computed(() => "/" + toMediaUrl(props.id, props.filename))

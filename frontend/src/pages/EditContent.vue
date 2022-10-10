@@ -1,7 +1,7 @@
 <template>
     <div v-if="data">
-        <div class="border rounded-lg border-white mx-auto md:max-w-screen-md h-96" @click="!id ? $refs.input.click() : null">
-            <div v-if="!id" class="cursor-pointer" :class="imgContainerClasses">
+        <div class="border rounded-lg border-white mx-auto md:max-w-screen-md h-96">
+            <div v-if="!id" class="relative" :class="imgContainerClasses">
                 <input
                     type="file"
                     id="upload"
@@ -11,11 +11,11 @@
                     @change="file = $event.target.files[0]"
                     accept="image/*,video/*"
                 />
-                <label for="upload" class="cursor-inherit" v-if="!file">
-                    <span>Click here to upload</span>
+                <img v-if="file && file.type.startsWith('image/')" :src="fileUrl" alt="upload" :class="imgClasses" />
+                <video v-else-if="file && file.type.startsWith('video/')" :src="fileUrl" />
+                <label for="upload" class="cursor-pointer absolute inset-0 flex justify-center items-center">
+                    <span v-if="!file">Click here to upload</span>
                 </label>
-                <img v-else-if="data.contentType.startsWith('image/')" :src="fileUrl" alt="upload" :class="imgClasses" />
-                <video v-else :src="fileUrl" />
             </div>
             <div v-else :class="imgContainerClasses">
                 <img
