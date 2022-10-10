@@ -3,10 +3,11 @@
   "packageManager": "yarn@3.2.4",
   "scripts": {
     "build": "tsx esbuild.ts",
-    "deploy": "cd ../cdk && pnpm deploy"
+    "deploy": "cd ../cdk && pnpm run deploy"
   },
   "devDependencies": {
-    "@hennigram/types": "^1.0.0",
+    "@hennigram/types": "workspace:^1.0.0",
+    "@hennigram/utils": "workspace:^1.0.0",
     "@types/aws-lambda": "^8.10.106",
     "@types/node": "10.17.27",
     "@types/uuid": "^8.3.4",

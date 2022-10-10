@@ -1,15 +1,17 @@
 <template>
-    <footer class="grid grid-cols-3 pt-4">
-        <nav
-            v-for="{ label, icon, target, isActive } in navElements"
-            :key="label"
-            @click="router.push(target)"
-            class="flex flex-col items-center justify-center p-4 cursor-pointer rounded-t-lg space-y-2"
-            :class="isActive && 'bg-gray-700'"
-        >
-            <component :is="icon" />
-            {{ label }}
-        </nav>
+    <footer class="bg-gray-800">
+        <div class="grid grid-cols-3 fixed bottom-0 w-full bg-gray-800">
+            <nav
+                v-for="{ label, icon, target, isActive } in navElements"
+                :key="label"
+                @click="router.push(target)"
+                class="flex flex-col items-center justify-center p-4 cursor-pointer rounded-t-lg space-y-2"
+                :class="isActive && 'bg-gray-700'"
+            >
+                <component :is="icon" />
+                {{ label }}
+            </nav>
+        </div>
     </footer>
 </template>
 

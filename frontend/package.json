@@ -8,15 +8,18 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "deploy": "aws s3 sync dist/ s3://hennigram.lamsal.de --delete --acl public-read && pnpm run invalidate",
-    "invalidate": "aws cloudfront create-invalidation --distribution-id E1VJSK5WE10S5C --paths \"/index.html\" --no-cli-pager",
+    "invalidate": "aws cloudfront create-invalidation --distribution-id E1VG8HKJ1Z8N2A --paths \"/index.html\" --no-cli-pager",
     "build+deploy": "yarn build && yarn deploy"
   },
   "dependencies": {
     "@hennigram/types": "workspace:^1.0.0",
+    "@hennigram/utils": "workspace:^1.0.0",
     "@lamsal-de/vue-element-in-view": "^1.0.1",
+    "@types/uuid": "^8.3.4",
     "axios": "^1.1.2",
     "mdue": "^0.1.4",
     "pinia": "^2.0.23",
+    "uuid": "^9.0.0",
     "vue": "^3.2.37",
     "vue-router": "^4.1.5"
   },

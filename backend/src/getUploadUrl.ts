@@ -3,6 +3,7 @@ import { v4 } from "uuid"
 import { S3 } from "aws-sdk"
 import { PutObjectRequest } from "aws-sdk/clients/s3"
 import { GetUploadUrlResponse } from "@hennigram/types/api/getUploadUrl"
+import { toMediaUrl } from "@hennigram/utils/toMediaUrl"
 
 export const getUploadUrl: APIGatewayProxyHandler = async event => {
     const { fileName, fileType } = JSON.parse(event.body || "{}") as { fileName: string; fileType: string }
@@ -19,7 +20,7 @@ export const getUploadUrl: APIGatewayProxyHandler = async event => {
     const response: GetUploadUrlResponse = {
         url: new S3().getSignedUrl("putObject", {
             Bucket: process.env.ASSETS_BUCKET!,
-            Key: "assets/" + postId + "/" + fileName,
+            Key: toMediaUrl(postId, fileName),
             ContentType: fileType,
         } as PutObjectRequest),
         postId,

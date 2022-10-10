@@ -10,6 +10,7 @@
     "deploy": "cdk deploy --hotswap --all"
   },
   "devDependencies": {
+    "@hennigram/utils": "workspace:^1.0.0",
     "@types/jest": "^27.5.2",
     "@types/node": "10.17.27",
     "@types/prettier": "2.6.0",

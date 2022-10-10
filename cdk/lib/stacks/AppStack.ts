@@ -71,5 +71,19 @@ export class AppStack extends Stack {
                 method: HttpMethod.POST,
             },
         })
+
+        new BackendLambda(this, "DeletePostMeta", {
+            name: "deletePostMeta",
+            tables: {
+                postMetas: AccessType.ReadWrite,
+            },
+            buckets: {
+                assets: AccessType.ReadWrite,
+            },
+            api: {
+                path: "/post-meta/{id}",
+                method: HttpMethod.DELETE,
+            },
+        })
     }
 }

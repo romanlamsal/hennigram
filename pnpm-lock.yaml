@@ -17,7 +17,8 @@ importers:
   backend:
     specifiers:
       '@aws-sdk/client-athena': ^3.186.0
-      '@hennigram/types': ^1.0.0
+      '@hennigram/types': workspace:^1.0.0
+      '@hennigram/utils': workspace:^1.0.0
       '@types/aws-lambda': ^8.10.106
       '@types/node': 10.17.27
       '@types/uuid': ^8.3.4
@@ -33,6 +34,7 @@ importers:
       uuid: 9.0.0
     devDependencies:
       '@hennigram/types': link:../common/types
+      '@hennigram/utils': link:../common/utils
       '@types/aws-lambda': 8.10.106
       '@types/node': 10.17.27
       '@types/uuid': 8.3.4
@@ -45,6 +47,7 @@ importers:
 
   cdk:
     specifiers:
+      '@hennigram/utils': workspace:^1.0.0
       '@types/jest': ^27.5.2
       '@types/node': 10.17.27
       '@types/prettier': 2.6.0
@@ -61,6 +64,7 @@ importers:
       constructs: 10.1.126
       source-map-support: 0.5.21
     devDependencies:
+      '@hennigram/utils': link:../common/utils
       '@types/jest': 27.5.2
       '@types/node': 10.17.27
       '@types/prettier': 2.6.0
@@ -73,10 +77,15 @@ importers:
   common/types:
     specifiers: {}
 
+  common/utils:
+    specifiers: {}
+
   frontend:
     specifiers:
       '@hennigram/types': workspace:^1.0.0
+      '@hennigram/utils': workspace:^1.0.0
       '@lamsal-de/vue-element-in-view': ^1.0.1
+      '@types/uuid': ^8.3.4
       '@vitejs/plugin-vue': ^3.1.0
       autoprefixer: ^10.4.12
       axios: ^1.1.2
@@ -85,16 +94,20 @@ importers:
       postcss: ^8.4.17
       tailwindcss: ^3.1.8
       typescript: ^4.6.4
+      uuid: ^9.0.0
       vite: ^3.1.0
       vue: ^3.2.37
       vue-router: ^4.1.5
       vue-tsc: ^0.40.4
     dependencies:
       '@hennigram/types': link:../common/types
+      '@hennigram/utils': link:../common/utils
       '@lamsal-de/vue-element-in-view': 1.0.1_vue@3.2.40
+      '@types/uuid': 8.3.4
       axios: 1.1.2
       mdue: 0.1.4_vue@3.2.40
       pinia: 2.0.23_bfjwoga25wxjazzogo7o372nwq
+      uuid: 9.0.0
       vue: 3.2.40
       vue-router: 4.1.5_vue@3.2.40
     devDependencies:
@@ -1565,7 +1578,6 @@ packages:
 
   /@types/uuid/8.3.4:
     resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
-    dev: true
 
   /@types/yargs-parser/21.0.0:
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}

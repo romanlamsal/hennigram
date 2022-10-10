@@ -7,8 +7,8 @@
             </div>
             <div class="text-sm">
                 <span>{{ new Date(post.dating).toLocaleDateString() }}</span>
-                <span></span>
             </div>
+            <router-link :to="`/edit-content/${post.id}`" class="underline text-xs text-blue-800">edit</router-link>
         </div>
     </article>
 </template>

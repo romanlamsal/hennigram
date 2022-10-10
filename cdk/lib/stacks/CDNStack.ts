@@ -18,6 +18,7 @@ import { apiStack, globals } from "../../bin/cdk"
 import { DnsValidatedCertificate } from "aws-cdk-lib/aws-certificatemanager"
 import { ARecord, RecordTarget } from "aws-cdk-lib/aws-route53"
 import { CloudFrontTarget } from "aws-cdk-lib/aws-route53-targets"
+import { mediaUrlPrefix } from "@hennigram/utils/toMediaUrl"
 
 export class ApiGatewayOrigin extends HttpOrigin {
     constructor(apigateway: IRestApi, props: HttpOriginProps) {
@@ -86,7 +87,7 @@ export class CDNStack extends Stack {
         })
 
         const assetsOrigin = new S3Origin(globals.assetsBucket)
-        distro.addBehavior("/assets/*", assetsOrigin, {
+        distro.addBehavior(`/${mediaUrlPrefix}/*`, assetsOrigin, {
             allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
             cachedMethods: CachedMethods.CACHE_GET_HEAD,
             viewerProtocolPolicy: ViewerProtocolPolicy.HTTPS_ONLY,

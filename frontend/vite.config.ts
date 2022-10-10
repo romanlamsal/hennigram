@@ -6,12 +6,13 @@ export default defineConfig({
     plugins: [vue()],
     server: {
         port: 4040,
+        host: true,
         proxy: {
             "/api": {
                 target: "https://hennigram.lamsal.de",
                 changeOrigin: true,
             },
-            "/assets": {
+            "/static-assets": {
                 target: "https://hennigram.lamsal.de",
                 changeOrigin: true,
             },
