@@ -1,6 +1,6 @@
 <template>
     <div v-if="data">
-        <div class="border rounded-lg border-white mx-auto md:max-w-screen-md h-96">
+        <div class="border rounded-lg border-white mx-auto max-w-full md:max-w-screen-md h-96">
             <div v-if="!id" class="relative" :class="imgContainerClasses">
                 <input
                     type="file"
@@ -27,7 +27,7 @@
                 <video v-else :src="'/' + toMediaUrl(data.id, data.filename)" />
             </div>
         </div>
-        <div class="grid grid-cols-[auto_1fr] gap-8 mt-8">
+        <div class="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-2 sm:gap-8 mt-8 w-full">
             <label for="description">Description</label>
             <textarea id="description" class="text-black resize-y" v-model="data.description" rows="5" />
             <label for="dating">Dating</label>

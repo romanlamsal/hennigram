@@ -9,3 +9,9 @@ html {
 body {
     height: 100%;
 }
+
+textarea,
+input {
+    width: auto;
+    min-width: unset;
+}

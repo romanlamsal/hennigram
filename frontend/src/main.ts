@@ -27,6 +27,10 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
     routes,
     history: createWebHistory(),
+    scrollBehavior() {
+        // always scroll to top
+        return { top: 0 }
+    },
 })
 
 app.use(router)

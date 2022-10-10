@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "deploy": "aws s3 sync dist/ s3://hennigram.lamsal.de --delete --acl public-read && pnpm run invalidate",
     "invalidate": "aws cloudfront create-invalidation --distribution-id E1VG8HKJ1Z8N2A --paths \"/index.html\" --no-cli-pager",
-    "build+deploy": "yarn build && yarn deploy"
+    "build+deploy": "pnpm build && pnpm run deploy"
   },
   "dependencies": {
     "@hennigram/types": "workspace:^1.0.0",
